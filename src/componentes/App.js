@@ -3,6 +3,10 @@ import UserContext from '../context/UserContext';
 import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
+import Home from "./Home";
+import Login from "./Login";
+import Cadastro from "./Cadastro";
+import Carrinho from "./Carrinho";
 
 export default function App() {
   const [token, setToken] = useState([]);
@@ -12,7 +16,10 @@ export default function App() {
     <UserContext.Provider value={{token, setToken}}>
       <BrowserRouter>
         <Routes>
-
+          <Route path='/' element = {<Home />}/>
+          <Route path='/signIn' element = {<Login />}/>
+          <Route path='/signUp' element = {<Cadastro />}/>
+          <Route path='/cart' element = {<Carrinho />}/>
         </Routes>
       </BrowserRouter>      
     </UserContext.Provider>
