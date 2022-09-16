@@ -1,10 +1,23 @@
 import styled from "styled-components";
 import logotipo from '../images/jan-kopriva-oK2OoXCpOB4-unsplash.jpg'
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import RenderizarHome from "./RenderizarHome";
+import { useState, useEffect } from "react";
+import axios from "axios";
+
 export default function Home (){
     const navigate = useNavigate();
+    const [produtos, setProdutos] = useState([]);
 
-
+    useEffect (()=>{
+        axios.get('http://localhost:5000/products').then(res =>{
+            console.log('entrou dentro do then')
+            setProdutos(res.data);
+        }).catch(erro=>{
+            console.log('entrou dentro do catch')
+            console.log(erro)
+         })
+    },[])
 
     function irParaLogin(){
         navigate('/signIn')
@@ -31,83 +44,13 @@ export default function Home (){
         </div>
     </Header>
     <Background>
-        <img src={logotipo}/>
+        <img src={logotipo} alt = "logotipo"/>
     </Background>
-
+    <h1>Ofertas</h1>
     <Container>
-        <h1>Ofertas</h1>
-        <ul>
-            <div>
-                <img src="https://40378.cdn.simplo7.net/static/40378/sku/masculino-tenis-nike-air-jordan-1-mid--p-1615292373886.jpg" alt=""/>
-                <h1>Nike Air Jordan 1</h1>
-                <p>R$ 2892,00</p>
-            </div>
-
-            <div>
-                <img src="https://40378.cdn.simplo7.net/static/40378/sku/masculino-tenis-nike-air-jordan-1-mid--p-1615292373886.jpg" alt=""/>
-                <h1>Nike Air Jordan 1</h1>
-                <p>R$ 2892,00</p>
-            </div>
-
-            <div>
-                <img src="https://40378.cdn.simplo7.net/static/40378/sku/masculino-tenis-nike-air-jordan-1-mid--p-1615292373886.jpg" alt=""/>
-                <h1>Nike Air Jordan 1</h1>
-                <p>R$ 2892,00</p>
-            </div>
-
-            <div>
-                <img src="https://40378.cdn.simplo7.net/static/40378/sku/masculino-tenis-nike-air-jordan-1-mid--p-1615292373886.jpg" alt=""/>
-                <h1>Nike Air Jordan 1</h1>
-                <p>R$ 2892,00</p>
-            </div>
-
-            <div>
-                <img src="https://40378.cdn.simplo7.net/static/40378/sku/masculino-tenis-nike-air-jordan-1-mid--p-1615292373886.jpg" alt=""/>
-                <h1>Nike Air Jordan 1</h1>
-                <p>R$ 2892,00</p>
-            </div>
-
-            <div>
-                <img src="https://40378.cdn.simplo7.net/static/40378/sku/masculino-tenis-nike-air-jordan-1-mid--p-1615292373886.jpg" alt=""/>
-                <h1>Nike Air Jordan 1</h1>
-                <p>R$ 2892,00</p>
-            </div>
-
-            <div>
-                <img src="https://40378.cdn.simplo7.net/static/40378/sku/masculino-tenis-nike-air-jordan-1-mid--p-1615292373886.jpg" alt=""/>
-                <h1>Nike Air Jordan 1</h1>
-                <p>R$ 2892,00</p>
-            </div>
-
-            <div>
-                <img src="https://40378.cdn.simplo7.net/static/40378/sku/masculino-tenis-nike-air-jordan-1-mid--p-1615292373886.jpg" alt=""/>
-                <h1>Nike Air Jordan 1</h1>
-                <p>R$ 2892,00</p>
-            </div>
-            <div>
-                <img src="https://40378.cdn.simplo7.net/static/40378/sku/masculino-tenis-nike-air-jordan-1-mid--p-1615292373886.jpg" alt=""/>
-                <h1>Nike Air Jordan 1</h1>
-                <p>R$ 2892,00</p>
-            </div>
-
-            <div>
-                <img src="https://40378.cdn.simplo7.net/static/40378/sku/masculino-tenis-nike-air-jordan-1-mid--p-1615292373886.jpg" alt=""/>
-                <h1>Nike Air Jordan 1</h1>
-                <p>R$ 2892,00</p>
-            </div>
-
-            <div>
-                <img src="https://40378.cdn.simplo7.net/static/40378/sku/masculino-tenis-nike-air-jordan-1-mid--p-1615292373886.jpg" alt=""/>
-                <h1>Nike Air Jordan 1</h1>
-                <p>R$ 2892,00</p>
-            </div>
-
-            <div>
-                <img src="https://40378.cdn.simplo7.net/static/40378/sku/masculino-tenis-nike-air-jordan-1-mid--p-1615292373886.jpg" alt=""/>
-                <h1>Nike Air Jordan 1</h1>
-                <p>R$ 2892,00</p>
-            </div>
-        </ul>
+    {!produtos ? <h1>Carregando Produtos...</h1>:
+        <RenderizarHome produtos = {produtos}/>
+    }
     </Container>
     </Body>
         </>
@@ -168,43 +111,11 @@ const Background = styled.div`
 `
 
 const Container = styled.div`
-    width: 100%;
+    width: 100vw;
     height: auto;
     display: grid;
     justify-content: center;
     margin-bottom: 10vw;
-h1 {
-    font-family: 'wallBomber';
-    font-size: 10vw;
-    text-align: center;
-}
-
-ul {
-    height: 100%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 60px;
-}
-
-ul > div {
-    background-color: red;
-    width: 25vw;
-    height: 25vw;
-    margin-bottom: 50px;
-}
-
-div h1{
-    font-size: 3vw;
-}
-
-div p {
-    font-size: 3vw;
-    text-align: center;
-    font-family: "Raleway";
-}
-
-ul div img{
-    width: 100%;
-    height: 100%;
-}
 `

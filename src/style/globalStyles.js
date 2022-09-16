@@ -1,20 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
-@font-face {
-    font-family: 'urbanJungle';
-    src: url(./fonts/UrbanJungleDEMO.otf);
-}
-
-@font-face {
-    font-family: 'aDrip';
-    src: url(./fonts/adrip1.ttf);
-}
-
-@font-face {
-    font-family: 'wallBomber';
-    src: url(./fonts/WallBomber.ttf);
-}
 
  *{
     margin: 0;
