@@ -31,7 +31,7 @@ export default function Home (){
     return (
         <>
         <Body>
-        <Header>
+            <Header>
         <div>
             <p onClick={irParaLogin}> Entrar /</p> <p onClick={irParaCadastro}>Cadastrar</p>
             
@@ -42,17 +42,17 @@ export default function Home (){
         <div onClick={irParaCarrinho}>
             <ion-icon name="cart"></ion-icon>
         </div>
-    </Header>
-    <Background>
-        <img src={logotipo} alt = "logotipo"/>
-    </Background>
-    <h1>Ofertas</h1>
-    <Container>
-    {!produtos ? <h1>Carregando Produtos...</h1>:
-        <RenderizarHome produtos = {produtos}/>
-    }
-    </Container>
-    </Body>
+            </Header>
+            <Background>
+                <img src={logotipo} alt = "logotipo"/>
+            </Background>
+            <h1>Ofertas</h1>
+            <Container>
+                {!produtos ? <h1>Carregando Produtos...</h1>:
+                <RenderizarHome produtos = {produtos}/>
+                }
+            </Container>
+        </Body>
         </>
     )
 }
@@ -62,8 +62,13 @@ const Body = styled.div`
     height: auto;
     overflow-x: hidden;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 8vw;
+    font-weight: 700;
+    
 `
-
 const Header = styled.div`
     width: 100%;
     height: 12vh;
@@ -73,6 +78,7 @@ const Header = styled.div`
 
     position: fixed;
     top: 0;
+    z-index: 1;
 
     border-bottom: 1px  solid;
     box-shadow: 0px 1px 15px black;

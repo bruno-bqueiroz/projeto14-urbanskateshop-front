@@ -3,15 +3,15 @@ import styled from "styled-components"
 export default function RenderizarHome({
     produtos
 }){
-    
+    console.log(produtos)
     return (
         <>
             {produtos.map((value, index) => 
                 <Caixa1 key={index}>
-                    <img src={value.url_image}/>
-                    <h1>{value.description}</h1>
+                    <img src={value.url_image} alt = {value.description} />
                     <div>
-                        <p>{value.newValue/100}</p> 
+                        <h1>{value.description}</h1>
+                        <p>R$ {value.newValue/100}</p> 
                         <ion-icon name="cart"></ion-icon>              
                     </div>
                 </Caixa1>
@@ -21,26 +21,28 @@ export default function RenderizarHome({
 }
 
 const Caixa1 = styled.div`
+width: 100%;
+height: 100%;
+background-color: blue;
 display: grid;
 justify-items: center;
 position: relative;
-h1 {
-    font-family: 'wallBomber';
-    font-size: 10vw;
-    text-align: center;
-}
 
 div {
     display: flex;
     align-items: center;
+    flex-direction: column;
     ion-icon{
     width: 4vw;
     height: 4vw;   
     }
-}
-h1{
+    h1{
     font-size: 3vw;
+    font-weight: 400;
+    background-color: red;
 }
+}
+
 
 p {
     font-size: 3vw;
