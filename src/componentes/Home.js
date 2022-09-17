@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import logotipo from '../images/jan-kopriva-oK2OoXCpOB4-unsplash.jpg'
-import { useNavigate } from "react-router-dom";
-import RenderizarHome from "./RenderizarHome";
+import { useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -31,26 +30,35 @@ export default function Home (){
     return (
         <>
         <Body>
-            <Header>
-        <div>
-            <p onClick={irParaLogin}> Entrar /</p> <p onClick={irParaCadastro}>Cadastrar</p>
-            
-        </div>
-        <div>
+        <Header>
+            <div>
+                <p onClick={irParaLogin}> Entrar /</p> <p onClick={irParaCadastro}>Cadastrar</p>
+            </div>
+            <div>
             <h1>URBAN</h1>
-        </div>
-        <div onClick={irParaCarrinho}>
-            <ion-icon name="cart"></ion-icon>
-        </div>
-            </Header>
+            </div>
+            <div onClick={irParaCarrinho}>
+                <ion-icon name="cart"></ion-icon>
+            </div>
+        </Header>
             <Background>
                 <img src={logotipo} alt = "logotipo"/>
             </Background>
             <h1>Ofertas</h1>
             <Container>
                 {!produtos ? <h1>Carregando Produtos...</h1>:
-                <RenderizarHome produtos = {produtos}/>
-                }
+                produtos.map((value, index) => 
+                    <Caixa1 key={index}  >
+                        <Link to={`/${value._id}`}>
+                        <img src={value.url_image} alt ={value.description} />
+                        <div >
+                            <h1>{value.description}</h1>
+                            <p>R$ {value.newValue/100}</p>               
+                        </div>
+                        </Link>
+                    </Caixa1>
+                )}
+                
             </Container>
         </Body>
         </>
@@ -124,4 +132,38 @@ const Container = styled.div`
     margin-bottom: 10vw;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+`
+const Caixa1 = styled.div`
+width: 100%;
+height: 100%;
+display: grid;
+justify-items: center;
+position: relative;
+
+div {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    ion-icon{
+    width: 4vw;
+    height: 4vw;   
+    }
+
+    h1{
+    font-size: 3vw;
+    font-weight: 400;
+}
+}
+
+
+p {
+    font-size: 3vw;
+    text-align: center;
+    font-family: "Raleway";
+}
+
+img{
+    width: 80%;
+    height: auto;
+}
 `
