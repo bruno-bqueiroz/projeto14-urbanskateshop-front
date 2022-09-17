@@ -1,9 +1,8 @@
-import GlobalStyle from "../style/globalStyles";
-import UserContext from '../context/UserContext'; 
 import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-
+import GlobalStyle from "../style/globalStyles";
+import UserContext from '../contexts/UserContext.js'; 
 import Home from "./Home";
 import Login from "./Login";
 import Cadastro from "./Cadastro";
@@ -12,10 +11,11 @@ import PaginaDoProduto from "./PaginaDoProduto";
 
 export default function App() {
   const [token, setToken] = useState([]);
+  console.log(token)
   return (
     <>
     <GlobalStyle/>
-    <UserContext.Provider value={{token, setToken}}>
+      <UserContext.Provider value={{ token, setToken }}>
       <BrowserRouter>
         <Routes>
           <Route path='/' element = {<Home />}/>
@@ -25,7 +25,7 @@ export default function App() {
           <Route path='/cart' element = {<Carrinho />}/>
         </Routes>
       </BrowserRouter>      
-    </UserContext.Provider>
+      </UserContext.Provider>
     </>
   )
 }

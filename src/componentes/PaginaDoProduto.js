@@ -1,9 +1,17 @@
 import { useParams, useNavigate } from "react-router-dom";
-import {useState, useEffect } from "react";
+import {useState, useEffect, useContext } from "react";
 import axios from "axios";
 import styled from "styled-components";
+import UserContext from "../contexts/UserContext.js";
 
 export default function PaginaDoProduto(){
+    const { token } = useContext(UserContext);
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+console.log(token)
     const {ID} = useParams();
     const navigate = useNavigate();
 
@@ -19,18 +27,6 @@ export default function PaginaDoProduto(){
          })
     },[])
 
-    /* const config = {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    } */
-    const config = {
-        headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzI0ZGIyZjQ1ZWY4NzljNDQwN2M3MWMiLCJpYXQiOjE2NjM0MTg4OTR9.ROAr9w1CAE5RudvGOFEXQySC7j37G2qO7J_rouf48us`
-        }
-    }
-
-    
     function irParaLogin(){
         navigate('/signIn')
     }
@@ -44,12 +40,15 @@ export default function PaginaDoProduto(){
         navigate('/')
     }
     function adicionarAoCarrinho(){
-        
         axios.post ('http://localhost:5000/cart', {
             productId: produto._id
-        }, config).then(res => console.log(res)).catch(error => console.error(error))
+        }, config).then(res =>{
+            console.log(res)
+            alert(
+                "Produto adicionado ao carrinho"
+            )
+        }).catch(error => console.error(error))
     }
-
     const produto = produtos.find((value) => value._id === ID)
 
     if (produto){
@@ -141,7 +140,6 @@ const Header = styled.div`
 
 const Corpo = styled.div`
     margin-top: 12vh;
-    background-color: red;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -149,8 +147,9 @@ const Corpo = styled.div`
     width: 100%;
     height: auto;
     img{
-        width: 80vw;
+        max-width: 80vw;
         height: auto;
+        max-height: 60vh;
     }
     div h1{
         font-size: 10vw;
