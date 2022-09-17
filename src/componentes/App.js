@@ -8,6 +8,8 @@ import Login from "./Login";
 import Cadastro from "./Cadastro";
 import Carrinho from "./Carrinho";
 
+import "../style/style.css"
+
 export default function App() {
   const [token, setToken] = useState([]);
   return (
