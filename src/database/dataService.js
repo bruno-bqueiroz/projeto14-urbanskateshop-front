@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL = "http://localhost:5000"
+const URL = "https://projeto14-urbansk8shop-back.herokuapp.com/"
 
 const postSignIn = async (user)=>{
     return await axios.post( URL+"/signIn", user)

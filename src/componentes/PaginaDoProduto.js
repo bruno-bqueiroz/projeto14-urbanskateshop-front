@@ -23,7 +23,7 @@ console.log(token)
     const [produtos, setProdutos] = useState([]);
 
     useEffect (()=>{
-        axios.get('http://localhost:5000/products').then(res =>{
+        axios.get('https://projeto14-urbansk8shop-back.herokuapp.com/products').then(res =>{
             console.log('entrou dentro do then')
             setProdutos(res.data);
         }).catch(erro=>{
@@ -45,7 +45,7 @@ console.log(token)
         navigate('/')
     }
     function adicionarAoCarrinho(){
-        axios.post ('http://localhost:5000/cart', {
+        axios.post ('https://projeto14-urbansk8shop-back.herokuapp.com/cart', {
             productId: produto._id
         }, config).then(res =>{
             console.log(res)

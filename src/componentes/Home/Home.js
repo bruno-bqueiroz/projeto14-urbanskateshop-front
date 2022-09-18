@@ -24,7 +24,7 @@ export default function Home (){
     window.addEventListener('scroll', changeColor)
 
     useEffect (()=>{
-        axios.get('http://localhost:5000/products').then(res =>{
+        axios.get('https://projeto14-urbansk8shop-back.herokuapp.com/products').then(res =>{
             console.log('entrou dentro do then')
             setProdutos(res.data);
         }).catch(erro=>{
