@@ -79,6 +79,7 @@ const Body = styled.div`
     font-size: 30px;
     font-weight: 700;
     background: #fff;
+    color: #222529;
     
 `
 const Header = styled.header`
@@ -180,7 +181,8 @@ const Container = styled.div`
     grid-template-columns: repeat(3, 1fr);
     place-items: center;
     gap: 20px;
-    background: #fff;
+     background: #fff;
+   
 
     @media (max-width: 800px) {
         grid-template-columns: repeat(2, 1fr);

@@ -29,7 +29,9 @@ export default function Carrinho (){
             console.log(erro)
          })
     },[])
-
+    let total = 0;
+    carrinho.map (value => total +=value.newValue)
+    total = total/100
     console.log(carrinho)
 
     function irParaLogin(){
@@ -37,6 +39,9 @@ export default function Carrinho (){
     }
     function irParaCadastro(){
         navigate('/signUp')
+    }
+    function irParaHome(){
+        navigate('/')
     }
     function finalizarCompra(){
         axios.post ('http://localhost:5000/checkout', {
@@ -56,7 +61,7 @@ export default function Carrinho (){
                 <p onClick={irParaLogin}> Entrar /</p> <p onClick={irParaCadastro}>Cadastrar</p>
             </div>
             <div>
-            <h1>URBAN</h1>
+            <h1 onClick={irParaHome}>URBAN</h1>
             </div>
             <div>
                 <ion-icon name="cart"></ion-icon>
@@ -73,12 +78,44 @@ export default function Carrinho (){
                 </div>
             </Container>
         )} 
-        <button onClick={finalizarCompra}> Finalizar a Compra </button>
+        <Rodape>
+            <h2>Total R$ {total}</h2>
+            <button onClick={finalizarCompra}> COMPRAR </button>
+        </Rodape>
         </Corpo>
+        
         </Body>
         </>
     )
 }
+
+const Rodape = styled.div`
+        width: 100%;
+        height: 10vw;
+        padding: 0 5vw;
+        position: fixed;
+        bottom: 2vh;
+        background-color: #FFFFFF;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        h2{
+        font-size: 5vw;
+        margin: 2vh 0;
+        }
+        button{
+            margin-left: 2vw;
+            width: 22vw;
+            height: 4vh;
+            background-color: #333430;
+            color: #FFFFFF;
+            border-radius: 1vw;
+            font-size: 3vw;
+            font-weight: 900;
+        }
+
+`
 
 const Body = styled.div`
     width: 100vw;
@@ -90,7 +127,6 @@ const Body = styled.div`
     align-items: center;
     font-size: 8vw;
     font-weight: 700;
-    
 `
 const Header = styled.div`
     width: 100%;
@@ -126,40 +162,45 @@ const Header = styled.div`
     }
 `
 const Container = styled.div`
+    margin-top: 5vh;
     margin-bottom: 10px;
+    margin-left: 5vw;
     padding-top: 2vh;
     padding-bottom: 2vh;
     height: 20vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
+    border-bottom: #627272 solid 1px;
+    width: 90%;
     height: auto;
     img{
         width: auto;
         height: 16vh;
     }
     div {
+        height: 20vh;
         display: flex;
+        align-items: center;
     }
     div h1{
         width: 50vw;
-        font-size: 4vw;
+        font-size: 3vw;
+        font-weight: 300;
+        color: #727272;
+
     }
     div p{
         font-size: 5vw;
-        color: red;
+        color: #627272;
     }
     
 `
 const Corpo = styled.div`
-    width: 100%;
     margin-top: 12vh;
-    button{
-        background-color: royalblue;
-        position: fixed;
-        bottom: 2vw;
-        right: 0;
-    }
+    width: 100vw;
+    height: auto;
 
 `
+
+
