@@ -10,7 +10,6 @@ import Carrinho from "./Carrinho/Carrinho";
 import PaginaDoProduto from "./PaginaDoProduto";
 import Compra from './Compra';
 
-
 import "../style/style.css"
 
 export default function App() {
