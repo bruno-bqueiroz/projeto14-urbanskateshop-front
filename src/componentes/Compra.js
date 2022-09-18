@@ -1,36 +1,38 @@
-import { useParams, useNavigate } from "react-router-dom";
-import {useState, useEffect, useContext } from "react";
-import axios from "axios";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import axios from "axios";
 import UserContext from "../contexts/UserContext.js";
 
-export default function PaginaDoProduto(){
-    const {ID} = useParams();
-    console.log(ID)
+export default function Compra (){
+
     /* const { token } = useContext(UserContext); */
     const { token } = {
         "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzI3NWNlY2U2MDVjNjlkOTZhNDFmMWUiLCJpYXQiOjE2NjM1MjQwODl9.boJwSJ_KxZFi3wod0sm_CoLNwdFXQA2-dFCjd0RDYh8"
       }
+
+    const navigate = useNavigate()
+    const [compras, setCompras] = useState([]);
+    console.log(token)
     const config = {
         headers: {
             Authorization: `Bearer ${token}`
         }
     }
-console.log(token)
     
-    const navigate = useNavigate();
-
-    const [produtos, setProdutos] = useState([]);
-
     useEffect (()=>{
-        axios.get('http://localhost:5000/products').then(res =>{
+        
+        axios.get('http://localhost:5000/checkout', config
+        ).then(res =>{
             console.log('entrou dentro do then')
-            setProdutos(res.data);
+            setCompras(res.data);
         }).catch(erro=>{
             console.log('entrou dentro do catch')
             console.log(erro)
          })
     },[])
+
+    console.log(compras)
 
     function irParaLogin(){
         navigate('/signIn')
@@ -41,22 +43,7 @@ console.log(token)
     function irParaCarrinho(){
         navigate('/cart')
     }
-    function irParaHome(){
-        navigate('/')
-    }
-    function adicionarAoCarrinho(){
-        axios.post ('http://localhost:5000/cart', {
-            productId: produto._id
-        }, config).then(res =>{
-            console.log(res)
-            alert(
-                "Produto adicionado ao carrinho"
-            )
-        }).catch(error => console.error(error))
-    }
-    const produto = produtos.find((value) => value._id === ID)
 
-    if (produto){
     return (
         <>
         <Body>
@@ -65,35 +52,32 @@ console.log(token)
                 <p onClick={irParaLogin}> Entrar /</p> <p onClick={irParaCadastro}>Cadastrar</p>
             </div>
             <div>
-            <h1 onClick={irParaHome}>URBAN</h1>
+            <h1>URBAN</h1>
             </div>
             <div onClick={irParaCarrinho}>
                 <ion-icon name="cart"></ion-icon>
             </div>
         </Header>
-            <Corpo>
-                <img src={produto.url_image} alt ={produto.description} />
+        <Corpo>
+        {!compras ? <h1> Carregando Produtos do carrinho </h1> : 
+        compras.map((value) => 
+        <Caixa>
+            {value.products.map((produtos, index)=>
+            <Container key={index}>
+                <img src={produtos.url_image} alt ={produtos.description} />
                 <div >
-                    <h1>{produto.description}</h1>
-                    <p>R$ {produto.newValue/100}</p>            
+                    <h1>{produtos.description}</h1>
+                    <p>R$ {produtos.newValue/100}</p>            
                 </div>
-                <div>
-                    <button onClick={irParaHome}> Pagina inicial </button>  
-                    <button > Comprar </button>
-                    <button onClick={adicionarAoCarrinho}> Adicionar ao carrinho </button> 
-                </div>
-            </Corpo>
+            </Container>
+            )}
+        </Caixa>
+        )} 
+        </Corpo>
+        
         </Body>
         </>
     )
-    }
-    return(
-        <>
-        <h1>Loading..</h1>
-        </>
-    )
-    
-    
 }
 
 const Body = styled.div`
@@ -108,7 +92,6 @@ const Body = styled.div`
     font-weight: 700;
     
 `
-
 const Header = styled.div`
     width: 100%;
     height: 12vh;
@@ -142,22 +125,47 @@ const Header = styled.div`
     margin-left: 20%;
     }
 `
-
-const Corpo = styled.div`
-    margin-top: 12vh;
+const Container = styled.div`
+    margin-bottom: 10px;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    height: 20vh;
+    
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
     height: auto;
     img{
-        max-width: 80vw;
-        height: auto;
-        max-height: 60vh;
+        width: auto;
+        height: 16vh;
+    }
+    div {
+        display: flex;
     }
     div h1{
-        font-size: 10vw;
+        width: 50vw;
+        font-size: 4vw;
+    }
+    div p{
+        font-size: 5vw;
+        color: red;
     }
     
+`
+const Corpo = styled.div`
+    width: 100%;
+    margin-top: 12vh;
+    button{
+        background-color: royalblue;
+        position: fixed;
+        bottom: 2vw;
+        right: 0;
+    }
+
+`
+const Caixa = styled.div`
+    margin-top: 20px;
+    border: solid 1px;
+
 `

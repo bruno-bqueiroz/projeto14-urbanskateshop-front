@@ -8,12 +8,12 @@ import Login from "./signIn-signUp/SignIn";
 import Cadastro from "./signIn-signUp/SignUp";
 import Carrinho from "./Carrinho/Carrinho";
 import PaginaDoProduto from "./PaginaDoProduto";
-
+import Compra from './Compra';
 
 import "../style/style.css"
 
 export default function App() {
-  const [token, setToken] = useState([]);
+  const [token, setToken] = useState({});
   const [user, setUser] = useState({})
   
   
@@ -31,9 +31,11 @@ export default function App() {
           <Route path='/signIn' element = {<Login />}/>
           <Route path='/signUp' element = {<Cadastro />}/>
           <Route path='/cart' element = {<Carrinho />}/>
+          <Route path='/checkout' element = {<Compra />}/>
+          
         </Routes>
       </BrowserRouter>      
-    </UserContext.Provider>
+      </UserContext.Provider>
     </>
   )
 }
