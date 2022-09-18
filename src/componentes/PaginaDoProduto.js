@@ -5,14 +5,19 @@ import styled from "styled-components";
 import UserContext from "../contexts/UserContext.js";
 
 export default function PaginaDoProduto(){
-    const { token } = useContext(UserContext);
+    const {ID} = useParams();
+    console.log(ID)
+    /* const { token } = useContext(UserContext); */
+    const { token } = {
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzI3NWNlY2U2MDVjNjlkOTZhNDFmMWUiLCJpYXQiOjE2NjM1MjQwODl9.boJwSJ_KxZFi3wod0sm_CoLNwdFXQA2-dFCjd0RDYh8"
+      }
     const config = {
         headers: {
             Authorization: `Bearer ${token}`
         }
     }
 console.log(token)
-    const {ID} = useParams();
+    
     const navigate = useNavigate();
 
     const [produtos, setProdutos] = useState([]);

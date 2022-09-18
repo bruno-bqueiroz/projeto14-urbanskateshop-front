@@ -2,10 +2,13 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import UserContext from "../contexts/UserContext.js";
+import UserContext from "../context/UserContext.js";
 
 export default function Carrinho (){
-    const { token } = useContext(UserContext);
+    /* const { token } = useContext(UserContext); */
+    const { token } = {
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzI3NWNlY2U2MDVjNjlkOTZhNDFmMWUiLCJpYXQiOjE2NjM1MjQwODl9.boJwSJ_KxZFi3wod0sm_CoLNwdFXQA2-dFCjd0RDYh8"
+      }
     const navigate = useNavigate()
     const [carrinho, setCarrinho] = useState([]);
     console.log(token)
@@ -37,11 +40,12 @@ export default function Carrinho (){
     }
     function finalizarCompra(){
         axios.post ('http://localhost:5000/checkout', {
-            payment:'3000'
+            payment: 3000000
         }, config).then(res =>{
             console.log(res)
+            navigate('/checkout')
         }).catch(error => console.error(error))
-        navigate('/checkout')
+        
     }
 
     return (
