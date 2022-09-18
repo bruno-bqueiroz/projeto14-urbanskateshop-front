@@ -4,10 +4,11 @@ import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import UserContext from "../contexts/UserContext.js";
 
-export default function Carrinho (){
+export default function Compra (){
+
     const { token } = useContext(UserContext);
     const navigate = useNavigate()
-    const [carrinho, setCarrinho] = useState([]);
+    const [compras, setCompras] = useState([]);
     console.log(token)
     const config = {
         headers: {
@@ -20,14 +21,14 @@ export default function Carrinho (){
         axios.get('http://localhost:5000/cart', config
         ).then(res =>{
             console.log('entrou dentro do then')
-            setCarrinho(res.data.products);
+            setCompras(res.data);
         }).catch(erro=>{
             console.log('entrou dentro do catch')
             console.log(erro)
          })
     },[])
 
-    console.log(carrinho)
+    console.log(compras)
 
     function irParaLogin(){
         navigate('/signIn')
@@ -35,13 +36,8 @@ export default function Carrinho (){
     function irParaCadastro(){
         navigate('/signUp')
     }
-    function finalizarCompra(){
-        axios.post ('http://localhost:5000/checkout', {
-            payment:'3000'
-        }, config).then(res =>{
-            console.log(res)
-        }).catch(error => console.error(error))
-        navigate('/checkout')
+    function irParaCarrinho(){
+        navigate('/cart')
     }
 
     return (
@@ -54,23 +50,10 @@ export default function Carrinho (){
             <div>
             <h1>URBAN</h1>
             </div>
-            <div>
+            <div onClick={irParaCarrinho}>
                 <ion-icon name="cart"></ion-icon>
             </div>
         </Header>
-        <Corpo>
-        {!carrinho ? <h1> Carregando Produtos do carrinho </h1> : 
-        carrinho.map((value, index) => 
-            <Container key={index}>
-                <img src={value.url_image} alt ={value.description} />
-                <div >
-                    <h1>{value.description}</h1>
-                    <p>R$ {value.newValue/100}</p>            
-                </div>
-            </Container>
-        )} 
-        <button onClick={finalizarCompra}> Finalizar a Compra </button>
-        </Corpo>
         </Body>
         </>
     )
@@ -120,42 +103,4 @@ const Header = styled.div`
     height: 10vw;
     margin-left: 20%;
     }
-`
-const Container = styled.div`
-    margin-bottom: 10px;
-    padding-top: 2vh;
-    padding-bottom: 2vh;
-    height: 20vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: auto;
-    img{
-        width: auto;
-        height: 16vh;
-    }
-    div {
-        display: flex;
-    }
-    div h1{
-        width: 50vw;
-        font-size: 4vw;
-    }
-    div p{
-        font-size: 5vw;
-        color: red;
-    }
-    
-`
-const Corpo = styled.div`
-    width: 100%;
-    margin-top: 12vh;
-    button{
-        background-color: royalblue;
-        position: fixed;
-        bottom: 2vw;
-        right: 0;
-    }
-
 `

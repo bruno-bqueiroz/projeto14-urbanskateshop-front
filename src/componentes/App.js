@@ -8,6 +8,7 @@ import Login from "./Login";
 import Cadastro from "./Cadastro";
 import Carrinho from "./Carrinho";
 import PaginaDoProduto from "./PaginaDoProduto";
+import Compra from './Compra';
 
 export default function App() {
   const [token, setToken] = useState([]);
@@ -23,6 +24,8 @@ export default function App() {
           <Route path='/signIn' element = {<Login />}/>
           <Route path='/signUp' element = {<Cadastro />}/>
           <Route path='/cart' element = {<Carrinho />}/>
+          <Route path='/checkout' element = {<Compra />}/>
+          
         </Routes>
       </BrowserRouter>      
       </UserContext.Provider>
