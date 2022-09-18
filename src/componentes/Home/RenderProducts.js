@@ -3,16 +3,14 @@ import styled from "styled-components"
 export default function RenderizarHome({
     produtos
 }){
-    console.log(produtos)
     return (
         <>
             {produtos.map((value, index) => 
                 <Caixa1 key={index}>
-                    <img src={value.url_image} alt = {value.description} />
+                    <img src={value.url_image} alt = {value.title} />
                     <div>
-                        <h1>{value.description}</h1>
-                        <p>R$ {value.newValue/100}</p> 
-                        <ion-icon name="cart"></ion-icon>              
+                        <h1>{value.title}</h1>
+                        <p>R$ {(value.newValue/100).toFixed(2)}</p>            
                     </div>
                 </Caixa1>
             )} 
@@ -21,9 +19,8 @@ export default function RenderizarHome({
 }
 
 const Caixa1 = styled.div`
-width: 100%;
-height: 100%;
-background-color: blue;
+max-width: 250px;
+max-height: 100%;
 display: grid;
 justify-items: center;
 position: relative;
@@ -33,21 +30,24 @@ div {
     align-items: center;
     flex-direction: column;
     ion-icon{
-    width: 4vw;
-    height: 4vw;   
+        width: 24px;
+        height: 24px; 
     }
     h1{
-    font-size: 3vw;
-    font-weight: 400;
-    background-color: red;
-}
+        font-size: 24px;
+        font-weight: 400;
+        text-align: center;
+    }
 }
 
 
 p {
-    font-size: 3vw;
+    font-size: 24px;
+    line-height: 30px;
     text-align: center;
     font-family: "Raleway";
+    display: flex;
+    align-items: center;
 }
 
 img{
