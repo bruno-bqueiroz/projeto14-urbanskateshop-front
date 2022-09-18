@@ -7,6 +7,8 @@ import Home from "./Home/Home";
 import Login from "./signIn-signUp/SignIn";
 import Cadastro from "./signIn-signUp/SignUp";
 import Carrinho from "./Carrinho/Carrinho";
+import PaginaDoProduto from "./PaginaDoProduto";
+
 
 import "../style/style.css"
 
@@ -25,6 +27,7 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element = {<Home />}/>
+          <Route path='/:ID' element = {<PaginaDoProduto />} />
           <Route path='/signIn' element = {<Login />}/>
           <Route path='/signUp' element = {<Cadastro />}/>
           <Route path='/cart' element = {<Carrinho />}/>
