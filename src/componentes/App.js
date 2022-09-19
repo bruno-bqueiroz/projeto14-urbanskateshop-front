@@ -14,15 +14,16 @@ import "../style/style.css"
 
 export default function App() {
   const [token, setToken] = useState({});
-  const [user, setUser] = useState({})
-  
+  const [userData, setUserData] = useState({})
+  const [authorization, setAuthorization] = useState(false)
   
   return (
     <>
     <GlobalStyle/>
     <UserContext.Provider value={{
       token, setToken,
-      user, setUser
+      userData, setUserData,
+      authorization, setAuthorization
       }}>
       <BrowserRouter>
         <Routes>

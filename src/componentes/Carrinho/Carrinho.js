@@ -11,7 +11,6 @@ export default function Carrinho (){
       }
     const navigate = useNavigate()
     const [carrinho, setCarrinho] = useState([]);
-    console.log(token)
     const config = {
         headers: {
             Authorization: `Bearer ${token}`
@@ -20,7 +19,7 @@ export default function Carrinho (){
     
     useEffect (()=>{
         
-        axios.get('http://localhost:5000/cart', config
+        axios.get('https://projeto14-urbansk8shop-back.herokuapp.com/cart', config
         ).then(res =>{
             console.log('entrou dentro do then')
             setCarrinho(res.data.products);

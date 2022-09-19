@@ -1,10 +1,11 @@
-import { useState, useEffect,useContext } from 'react';
+import { useState,useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 
 import {postSignIn}  from '../../database/dataService';
 import userContext from '../context/UserContext';
+import image1 from '../../images/mikael-kristenson-2YWymeP3cJM-unsplash.jpg'
 
 
 
@@ -14,10 +15,10 @@ export default function SignIn(){
     const [password, setPassword] = useState('')
     const [err, setErr] = useState(false)
     const [unauthorized ,setUnAuthorized] = useState(false)
-    /* const {setAuthorization} = useContext(userContext)
-    const {setUserData} = useContext(userContext) */
+    const {setAuthorization} = useContext(userContext)
+    const {setUserData} = useContext(userContext)
 
-   async function handleForm (e){
+    async function handleForm (e){
         e.preventDefault()
         if(password.length<8) return setErr(true)
 
@@ -26,66 +27,89 @@ export default function SignIn(){
                 email,
                 password,
             })
-            /* setUserData(response.data)
-            setAuthorization(true) */
+            setUserData(response.data)
+            setAuthorization(true)
             localStorage.setItem('token', response.data.token)
             navigate(`/`)
         } catch (error) {
             console.error(error)
             if(error.response?.status === 401) {setErr(true); setUnAuthorized(true);}
             if(error.response?.status === 400) setErr(true)
-            if(error.response?.status === 404) alert(error.response?.data.message)
+            if(error.response?.status === 404) setErr(true);alert(error.response?.data.message);
         }
     }
 
     return(
         <Container className="sign-in">
-            <h1>Urban</h1>
-            <Form onSubmit={handleForm}
-                inputColor = ""
-            >
-                <input id="email" 
-                name="email" 
-                type="email" 
-                placeholder="E-mail" 
-                className={err ? 'err':''}
-                required
-                value={email}
-                onChange={(e)=> setEmail(e.target.value)
-                }/>
-                
-                <input id='password' 
-                name="password" type="password"
-                placeholder="Senha" 
-                className={err ? 'err':''}
-                minLength='8'
-                required
-                value={password}
-                onChange={(e)=> setPassword(e.target.value)
-                }
-                />
-                {unauthorized? <p>O email ou a senha está incorreto</p> : ''}
-                <button>Entrar</button>
-            </Form>
-            <footer onClick={()=>navigate('/signUp')}>Primeira vez? Cadastre-se!</footer>
+            <div className='title'><h1 onClick={()=> navigate('/')}>Urban</h1></div>
+            <div className='form'>
+                <Form onSubmit={handleForm}
+                    inputColor = {err? "red" : "gray"}
+                >
+                    <input id="email" 
+                    name="email" 
+                    type="email" 
+                    placeholder="E-mail" 
+                    required
+                    value={email}
+                    onChange={(e)=> setEmail(e.target.value)
+                    }/>
+                    
+                    <input id='password' 
+                    name="password" type="password"
+                    placeholder="Senha" 
+                    minLength='8'
+                    required
+                    value={password}
+                    onChange={(e)=> setPassword(e.target.value)
+                    }
+                    />
+                    {unauthorized? <p>O email ou a senha está incorreto</p> : ''}
+                    <button>Entrar</button>
+                </Form>
+                <footer onClick={()=>navigate('/signUp')}>Primeira vez? Cadastre-se!</footer>
+            </div>
         </Container>
     )
 }
 
 const Container = styled.div`
-    max-width: 800px;
+    width: 100vw;
     height: 100vh;
-    max-height: 400px;
-    max-width: 600px;
-    margin: 15vh auto;
-    padding: 0 20px;
-    text-align: center;
-    font-family: 'Urbanist', sans-serif;
+    background-image: url(${image1});
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    padding: 7vh 30px;
+    
+    .title{
+        height: 20vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-    h1{
+    .title h1{
         font-family: "urbanJungle";
         font-size: 60px;
-        margin-bottom: 20px;
+        margin: 20px;
+        cursor: pointer;
+        color: #fff;
+        text-align: center;        
+    }
+
+    .form{
+        background-color: white;
+        box-shadow: 0px 0px 10px 1px black;
+        padding: 30px 20px;
+        border-radius: 10px;
+        background-color: #f2f2f2;
+        max-width: 800px;
+        max-height: 400px;
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+        font-family: 'Urbanist', sans-serif;
     }
 `
 
@@ -95,14 +119,21 @@ const Form = styled.form`
 
     input{
         height: 40px;
+        border: 2px solid;
+        border-radius: 5px;
         border-color: ${props=> props.inputColor};
         margin-bottom: 10px;
         font-size: 25px;
+        padding:0 5px;
     }
 
     button{
         margin-top: 20px;
         height: 35px;
         margin-bottom: 60px;
+        cursor:pointer;
+        border: 1px solid #274965;
+        border-radius: 10px;
+        background-color: #95c5c6;
     }
 `

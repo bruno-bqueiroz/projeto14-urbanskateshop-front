@@ -3,10 +3,10 @@ import {useState, useEffect, useContext } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import UserContext from "../contexts/UserContext.js";
+import Navbar from "./shared/NavBar.jsx";
 
 export default function PaginaDoProduto(){
     const {ID} = useParams();
-    console.log(ID)
     /* const { token } = useContext(UserContext); */
     const { token } = {
         "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzI3NWNlY2U2MDVjNjlkOTZhNDFmMWUiLCJpYXQiOjE2NjM1MjQwODl9.boJwSJ_KxZFi3wod0sm_CoLNwdFXQA2-dFCjd0RDYh8"
@@ -16,18 +16,15 @@ export default function PaginaDoProduto(){
             Authorization: `Bearer ${token}`
         }
     }
-console.log(token)
     
     const navigate = useNavigate();
 
     const [produtos, setProdutos] = useState([]);
 
     useEffect (()=>{
-        axios.get('http://localhost:5000/products').then(res =>{
-            console.log('entrou dentro do then')
+        axios.get('https://projeto14-urbansk8shop-back.herokuapp.com/products').then(res =>{
             setProdutos(res.data);
         }).catch(erro=>{
-            console.log('entrou dentro do catch')
             console.log(erro)
          })
     },[])
@@ -45,7 +42,7 @@ console.log(token)
         navigate('/')
     }
     function adicionarAoCarrinho(){
-        axios.post ('http://localhost:5000/cart', {
+        axios.post ('https://projeto14-urbansk8shop-back.herokuapp.com/cart', {
             productId: produto._id
         }, config).then(res =>{
             console.log(res)
@@ -60,17 +57,7 @@ console.log(token)
     return (
         <>
         <Body>
-        <Header>
-            <div>
-                <p onClick={irParaLogin}> Entrar /</p> <p onClick={irParaCadastro}>Cadastrar</p>
-            </div>
-            <div>
-            <h1 onClick={irParaHome}>URBAN</h1>
-            </div>
-            <div onClick={irParaCarrinho}>
-                <ion-icon name="cart"></ion-icon>
-            </div>
-        </Header>
+            <Navbar color='black'/>
             <Corpo>
                 <img src={produto.url_image} alt ={produto.description} />
                 <Descricao >
