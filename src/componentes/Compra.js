@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import UserContext from "./context/UserContext";
@@ -14,10 +13,7 @@ export default function Compra (){
             Authorization: `Bearer ${userData.token}`
         }
     }
-
-    const navigate = useNavigate()
     const [compras, setCompras] = useState([]);
-    
     
     useEffect (()=>{
         
@@ -30,9 +26,8 @@ export default function Compra (){
             console.log(erro)
          })
     },[])
-
-    console.log(compras)
-
+   
+      
     return (
         <>
         <Body>
@@ -44,16 +39,20 @@ export default function Compra (){
             {value.products.map((produtos, index)=>
             <Container key={index}>
                 <img src={produtos.url_image} alt ={produtos.description} />
+                
                 <div >
                     <h1>{produtos.description}</h1>
-                    <p>R$ {produtos.newValue/100}</p>            
-                </div>
+                    <p>R$ {produtos.newValue/100}</p>   
+                </div>    
             </Container>
             )}
+            <span><div>
+            <p>Produto Enviado!</p>  
+            <b>Total da Compra R$ {value.amount/100}</b>
+            </div></span>
         </Caixa>
         )} 
         </Corpo>
-        
         </Body>
         </>
     )
@@ -69,72 +68,45 @@ const Body = styled.div`
     align-items: center;
     font-size: 8vw;
     font-weight: 700;
+    background-color: #e9ecef;
     
 `
-const Header = styled.div`
-    width: 100%;
-    height: 12vh;
-    display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    align-items: center;
 
-    position: fixed;
-    top: 0;
-    z-index: 1;
-
-    border-bottom: 1px  solid;
-    box-shadow: 0px 1px 15px black;
-    background-color: white;
-
-    h1{
-    font-family: "urbanJungle";
-    font-size: 10vw;
-    text-align: center;
-    margin: 0;
-    }
-    p{
-    font-family: "aDrip";
-    font-size:5vw;
-    text-align: center;
-    margin: 0;
-    }
-    ion-icon{
-    width: 10vw;
-    height: 10vw;
-    margin-left: 20%;
-    }
-`
 const Container = styled.div`
     margin-bottom: 10px;
     padding-top: 2vh;
     padding-bottom: 2vh;
     height: 20vh;
-    
+
     display: flex;
     align-items: center;
     justify-content: center;
+    
     width: 100%;
-    height: auto;
+    height: 10vh;
+    
     img{
         width: auto;
-        height: 16vh;
+        height: 100%;
     }
     div {
         display: flex;
     }
     div h1{
         width: 50vw;
-        font-size: 4vw;
+        font-size: 2vw;
+        font-weight: 300;
+        color: #6c757d;
     }
     div p{
-        font-size: 5vw;
-        color: red;
+        font-size: 3vw;
+        color: #495057;
     }
     
 `
 const Corpo = styled.div`
-    width: 100%;
-    margin-top: 12vh;
+    width: 90%;
+    margin: 10vh;
     button{
         background-color: royalblue;
         position: fixed;
@@ -145,6 +117,24 @@ const Corpo = styled.div`
 `
 const Caixa = styled.div`
     margin-top: 20px;
-    border: solid 1px;
+    border: solid 1px #f8f9fa;
+    border-radius: 2vw ;
+    background-color: #f8f9fa;
+span div{
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 1vh;
+   
+    p{
+        font-size: 2vw;
+        font-weight: 500;
+        color: #212529;
+    }
+    b{
+        font-size: 2vw;
+        font-weight: 800;
+        color: #212529;
+    }
+}
 
 `
