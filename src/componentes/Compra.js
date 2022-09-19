@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import UserContext from "./context/UserContext";
-
 import Navbar from "./shared/NavBar";
+import { useNavigate } from "react-router-dom";
 
 export default function Compra (){
     const navigate = useNavigate()
@@ -16,7 +16,6 @@ export default function Compra (){
             Authorization: `Bearer ${userData.token}`
         }
     }
-    const [compras, setCompras] = useState([]);
     
     useEffect (()=>{
         
@@ -73,16 +72,7 @@ const Body = styled.div`
     background-color: #e9ecef;
     
 `
-const Header = styled.div`
-    width: 100%;
-    height: 12vh;
-    display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    align-items: center;
 
-    position: fixed;
-    top: 0;
-    z-index: 1;
 
 const Container = styled.div`
     margin-bottom: 10px;

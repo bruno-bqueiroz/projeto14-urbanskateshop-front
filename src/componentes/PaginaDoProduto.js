@@ -1,17 +1,17 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {useState, useEffect, useContext } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import UserContext from "./context/UserContext";
-import Navbar from "./shared/NavBar.jsx";
 import UserContext from "./context/UserContext.js";
+import Navbar from "./shared/NavBar.jsx";
+
 
 export default function PaginaDoproduct(){
     const navigate = useNavigate();
     const {productId} = useParams();
     const [product, setProduct] = useState([]);
     const { userData, localToken } = useContext(UserContext);
-    const [token, setToken] = useState(userData.token || localToken)
+    const [token] = useState(userData.token || localToken)
     
     const config = {
         headers: {
