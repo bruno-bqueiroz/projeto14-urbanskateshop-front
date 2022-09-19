@@ -31,7 +31,9 @@ export default function Navbar({color}){
                 
             <div className="nav-menu">
                 <ion-icon  name="cart" onClick={()=> navigate('/cart')}></ion-icon>
-                {userName? <p>{userName}</p>:<p onClick={()=>navigate('/signIn')}>Entrar / Cadastrar</p>}
+                {userName? <p onClick={()=>navigate('/checkout')}>{userName}</p>
+                :
+                <p onClick={()=>navigate('/signIn')}>Entrar / Cadastrar</p>}
             </div>
         </Header>
     )

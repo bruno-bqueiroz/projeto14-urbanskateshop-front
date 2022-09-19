@@ -29,16 +29,6 @@ export default function Compra (){
          })
     },[])
 
-    function irParaLogin(){
-        navigate('/signIn')
-    }
-    function irParaCadastro(){
-        navigate('/signUp')
-    }
-    function irParaCarrinho(){
-        navigate('/cart')
-    }
-
     return (
         <>
         <Body>

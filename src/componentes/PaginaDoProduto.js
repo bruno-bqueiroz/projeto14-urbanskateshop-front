@@ -50,7 +50,10 @@ export default function PaginaDoproduct(){
             alert(
                 "Produto adicionado ao carrinho"
             )
-        }).catch(error => console.error(error))
+        }).catch(error => {
+            console.error(error)
+            navigate('/signIn')
+        })
     }
 
     if (product){
