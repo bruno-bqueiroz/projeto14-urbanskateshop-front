@@ -3,12 +3,12 @@ import { useState } from 'react';
 import styled from 'styled-components';
 
 import {postSignUp}  from '../../database/dataService';
-import image1 from '../../images/mikael-kristenson-2YWymeP3cJM-unsplash.jpg'
+import image1 from '../../images/mikael-kristenson-2YWymeP3cJM-unsplash.png'
 
 
 export default function SignUp(){
     const navigate = useNavigate()
-    
+
     const [name, setName] = useState('')
     const [email , setEmail] = useState('')
     const [password, setPassword] = useState('')

@@ -63,6 +63,7 @@ const Background = styled.div`
     margin-bottom: 20px;
     z-index: 0;
 
+
     @media (max-width: 800px) {
     background-image: linear-gradient(180deg,rgba(255, 255, 255, 0) 0%,rgba(0, 0, 0, 0.5) 70%,#ffffff 100%),
     url(${PH_flip});

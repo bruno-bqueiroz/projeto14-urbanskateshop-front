@@ -2,14 +2,16 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import UserContext from "../context/UserContext";
-import Navbar from "../shared/NavBar";
+import UserContext from "../context/UserContext.js";
+
+import Navbar from "../shared/NavBar.jsx";
+
 export default function Carrinho (){
-    
     const navigate = useNavigate()
     const [carrinho, setCarrinho] = useState([]);
-    const { userData } = useContext(UserContext);
-    console.log(userData)
+    const { userData, localToken } = useContext(UserContext);
+    const [token, setToken] = useState(userData.token || localToken)
+    
     const config = {
         headers: {
             Authorization: `Bearer ${userData.token}`
@@ -20,24 +22,21 @@ export default function Carrinho (){
         
         axios.get('https://projeto14-urbansk8shop-back.herokuapp.com/cart', config
         ).then(res =>{
-            console.log('entrou dentro do then')
             setCarrinho(res.data.products);
         }).catch(erro=>{
-            console.log('entrou dentro do catch')
-            console.log(erro)
+            console.error(erro)
+            if(erro.response?.status !== 404) navigate('/signIn')
          })
     },[])
     let total = 0;
     carrinho.map (value => total +=value.newValue)
     total = total/100
-    console.log(carrinho)
 
-    
+
     function finalizarCompra(){
         axios.post ('https://projeto14-urbansk8shop-back.herokuapp.com/checkout', {
             payment: 3000000
         }, config).then(res =>{
-            console.log(res)
             navigate('/checkout')
         }).catch(error => console.error(error))   
     }

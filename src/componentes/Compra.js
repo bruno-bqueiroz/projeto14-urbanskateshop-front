@@ -2,12 +2,15 @@ import styled from "styled-components";
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import UserContext from "./context/UserContext";
+
 import Navbar from "./shared/NavBar";
 
 export default function Compra (){
-
-    const { userData } = useContext(UserContext);
-    console.log(userData)
+    const navigate = useNavigate()
+    const [compras, setCompras] = useState([]);
+    const { userData, localToken } = useContext(UserContext);
+    const [token, setToken] = useState(userData.token || localToken)
+    
     const config = {
         headers: {
             Authorization: `Bearer ${userData.token}`
@@ -19,11 +22,10 @@ export default function Compra (){
         
         axios.get('https://projeto14-urbansk8shop-back.herokuapp.com/checkout', config
         ).then(res =>{
-            console.log('entrou dentro do then')
             setCompras(res.data);
         }).catch(erro=>{
-            console.log('entrou dentro do catch')
-            console.log(erro)
+            console.error(erro)
+            navigate('/signIn')
          })
     },[])
    
@@ -71,6 +73,16 @@ const Body = styled.div`
     background-color: #e9ecef;
     
 `
+const Header = styled.div`
+    width: 100%;
+    height: 12vh;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    align-items: center;
+
+    position: fixed;
+    top: 0;
+    z-index: 1;
 
 const Container = styled.div`
     margin-bottom: 10px;

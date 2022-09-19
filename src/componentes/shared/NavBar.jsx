@@ -6,8 +6,10 @@ import UserContext from "../context/UserContext";
 
 
 export default function Navbar({color}){
-    const {userData} = useContext(UserContext)
+    const {userData, localUserName} = useContext(UserContext)
     const [bgColor, setBgColor] = useState(false)
+    const [userName, setUserName] = useState(userData.name || localUserName)
+    
     const navigate = useNavigate();
     
     const changeColor = ()=>{
@@ -29,7 +31,7 @@ export default function Navbar({color}){
                 
             <div className="nav-menu">
                 <ion-icon  name="cart" onClick={()=> navigate('/cart')}></ion-icon>
-                {userData.name? <p>{userData.name}</p>:<p onClick={()=>navigate('/signIn')}>Entrar / Cadastrar</p>}
+                {userName? <p>{userName}</p>:<p onClick={()=>navigate('/signIn')}>Entrar / Cadastrar</p>}
             </div>
         </Header>
     )
