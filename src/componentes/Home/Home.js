@@ -51,7 +51,6 @@ const Body = styled.div`
     font-weight: 700;
     background: #fff;
     color: #222529;
-    
 `
 
 const Background = styled.div`
@@ -79,7 +78,6 @@ const Container = styled.div`
     place-items: center;
     gap: 20px;
      background: #fff;
-   
 
     @media (max-width: 800px) {
         grid-template-columns: repeat(2, 1fr);

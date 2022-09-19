@@ -73,6 +73,7 @@ const Body = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-family: 'Urbanist', sans-serif;
     font-size: 8vw;
     font-weight: 700;
 `
