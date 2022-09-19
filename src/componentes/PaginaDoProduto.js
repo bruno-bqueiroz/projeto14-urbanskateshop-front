@@ -96,6 +96,17 @@ const Corpo = styled.div`
         height: auto;
         max-height: 55vh;
     }
+    @media (min-width: 800px) {
+        flex-direction: row;
+        padding-left: 10vw;
+        margin-top: 35vh;
+        img{
+        max-width: 45vw;
+        height: auto;
+        max-height: 55vh;
+    }
+    }
+
 `
 
 const Descricao = styled.div`
@@ -113,6 +124,7 @@ const Descricao = styled.div`
         h2{
         font-size: 5vw;
         margin: 2vh 0;
+        color: #333430;
         }
         button{
             margin-left: 2vw;
@@ -136,5 +148,37 @@ const Descricao = styled.div`
         margin: 2vh 0;
         color: #727272;
     }
+
+
+    @media (min-width: 800px) {
+
+        h1{
+            font-size: 3vw;
+        }
+        p{
+            font-size: 2vw;
+        }
+        div{
+            margin-top: 10vh;
+            width: 37vw;
+            flex-direction: column;
+            justify-items: center;
+            position: inherit;
+            bottom: auto;
+            h2{
+                font-size: 3vw;
+                font-weight: 800;
+            }
+            button{
+                margin-left: 0;
+                width: 14vw;
+                font-size: 2vh;
+                font-weight: 900;
+                border-radius: 10px;
+            }
+        }
+        
+        ;
+    } 
     
 `

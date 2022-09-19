@@ -61,7 +61,7 @@ export default function Compra (){
 
 const Body = styled.div`
     width: 100vw;
-    height: auto;
+    height: 100vh;
     overflow-x: hidden;
     position: relative;
     display: flex;
