@@ -2,19 +2,20 @@ import { useParams, useNavigate } from "react-router-dom";
 import {useState, useEffect, useContext } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import UserContext from "./context/UserContext";
+import UserContext from "./context/UserContext.js";
 import Navbar from "./shared/NavBar.jsx";
+
 
 export default function PaginaDoproduct(){
     const navigate = useNavigate();
     const {productId} = useParams();
     const [product, setProduct] = useState([]);
     const { userData, localToken } = useContext(UserContext);
-    const [token, setToken] = useState(userData.token || localToken)
+    const [token] = useState(userData.token || localToken)
     
     const config = {
         headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${userData.token}`
         }
     }
 
@@ -26,18 +27,6 @@ export default function PaginaDoproduct(){
          })
     },[])
 
-    function irParaLogin(){
-        navigate('/signIn')
-    }
-    function irParaCadastro(){
-        navigate('/signUp')
-    }
-    function irParaCarrinho(){
-        navigate('/cart')
-    }
-    function irParaHome(){
-        navigate('/')
-    }
     function adicionarAoCarrinho(){
         if(!token){
             navigate('/signIn')
@@ -77,6 +66,7 @@ export default function PaginaDoproduct(){
     }
     return(
         <>
+        <Navbar color='black'/>
         <h1>Loading..</h1>
         </>
     )
@@ -90,42 +80,9 @@ const Body = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-family: 'Urbanist', sans-serif;
     font-size: 8vw;
     font-weight: 700;
-`
-
-const Header = styled.div`
-    width: 100%;
-    height: 12vh;
-    display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    align-items: center;
-
-    position: fixed;
-    top: 0;
-    z-index: 1;
-
-    border-bottom: 1px  solid;
-    box-shadow: 0px 1px 15px black;
-    background-color: white;
-
-    h1{
-    font-family: "urbanJungle";
-    font-size: 10vw;
-    text-align: center;
-    margin: 0;
-    }
-    p{
-    font-family: "aDrip";
-    font-size:5vw;
-    text-align: center;
-    margin: 0;
-    }
-    ion-icon{
-    width: 10vw;
-    height: 10vw;
-    margin-left: 20%;
-    }
 `
 
 const Corpo = styled.div`

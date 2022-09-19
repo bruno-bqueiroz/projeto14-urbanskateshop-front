@@ -14,7 +14,7 @@ export default function Carrinho (){
     
     const config = {
         headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${userData.token}`
         }
     }
     
@@ -38,8 +38,7 @@ export default function Carrinho (){
             payment: 3000000
         }, config).then(res =>{
             navigate('/checkout')
-        }).catch(error => console.error(error))
-        
+        }).catch(error => console.error(error))   
     }
 
     return (
@@ -58,7 +57,14 @@ export default function Carrinho (){
             </Container>
         )} 
         <Rodape>
-            <h2>Total R$ {total}</h2>
+            <div>
+            <div>
+            <p>Desconto: R$ </p> <h3>0.00</h3>
+            </div>
+            <div>
+            <p>Total R$ </p><h2>  {total}</h2>
+            </div>
+            </div>
             <button onClick={finalizarCompra}> COMPRAR </button>
         </Rodape>
         </Corpo>
@@ -70,24 +76,42 @@ export default function Carrinho (){
 
 const Rodape = styled.div`
         width: 100%;
-        height: 10vw;
-        padding: 0 5vw;
+        height: 7vh;
+        padding: 0 10vw;
         position: fixed;
-        bottom: 2vh;
-        background-color: #FFFFFF;
+        bottom: 0px;
+        background-color: #e9ecef;
         z-index: 1;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        h2{
-        font-size: 5vw;
-        margin: 2vh 0;
+       div div{
+            display: flex;
+            height: 3vh;
+            align-items: center;
+            justify-items: center;
+            p{
+                font-size: 3vw;
+                font-weight: 300;
+                color: #343a40;
+            }
+            h2{
+            font-size: 3vw;
+            margin: 2vh 1vw;
+            color: #343a40;
+            }
+            h3{
+            font-size: 3vw;
+            margin: 2vh 1vw;
+            font-weight: 600;
+            color: #343a40;
+            }
         }
         button{
             margin-left: 2vw;
             width: 22vw;
             height: 4vh;
-            background-color: #333430;
+            background-color: #343a40;
             color: #FFFFFF;
             border-radius: 1vw;
             font-size: 3vw;
@@ -107,41 +131,8 @@ const Body = styled.div`
     font-size: 8vw;
     font-weight: 700;
 `
-const Header = styled.div`
-    width: 100%;
-    height: 12vh;
-    display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    align-items: center;
 
-    position: fixed;
-    top: 0;
-    z-index: 1;
-
-    border-bottom: 1px  solid;
-    box-shadow: 0px 1px 15px black;
-    background-color: white;
-
-    h1{
-    font-family: "urbanJungle";
-    font-size: 10vw;
-    text-align: center;
-    margin: 0;
-    }
-    p{
-    font-family: "aDrip";
-    font-size:5vw;
-    text-align: center;
-    margin: 0;
-    }
-    ion-icon{
-    width: 10vw;
-    height: 10vw;
-    margin-left: 20%;
-    }
-`
 const Container = styled.div`
-    margin-top: 5vh;
     margin-bottom: 10px;
     margin-left: 5vw;
     padding-top: 2vh;
@@ -160,7 +151,9 @@ const Container = styled.div`
     div {
         height: 20vh;
         display: flex;
-        align-items: center;
+        align-items: flex-start;
+        justify-content: center;
+        flex-direction: column;
     }
     div h1{
         width: 50vw;
@@ -170,7 +163,8 @@ const Container = styled.div`
 
     }
     div p{
-        font-size: 5vw;
+        margin-top: 1vh;
+        font-size: 3vw;
         color: #627272;
     }
     
