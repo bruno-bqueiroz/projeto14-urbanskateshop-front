@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import {postSignIn}  from '../../database/dataService';
 import userContext from '../context/UserContext';
-import image1 from '../../images/mikael-kristenson-2YWymeP3cJM-unsplash.jpg'
+import image1 from '../../images/mikael-kristenson-2YWymeP3cJM-unsplash.png'
 
 
 

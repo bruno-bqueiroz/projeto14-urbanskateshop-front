@@ -2,20 +2,17 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import UserContext from "../contexts/UserContext.js";
+import UserContext from "./context/UserContext";
 
 export default function Compra (){
-
-    /* const { token } = useContext(UserContext); */
-    const { token } = {
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzI3NWNlY2U2MDVjNjlkOTZhNDFmMWUiLCJpYXQiOjE2NjM1MjQwODl9.boJwSJ_KxZFi3wod0sm_CoLNwdFXQA2-dFCjd0RDYh8"
-      }
-
     const navigate = useNavigate()
     const [compras, setCompras] = useState([]);
+    
+    const { userData } = useContext(UserContext);
+    
     const config = {
         headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${userData.token}`
         }
     }
     

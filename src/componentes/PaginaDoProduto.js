@@ -2,20 +2,20 @@ import { useParams, useNavigate } from "react-router-dom";
 import {useState, useEffect, useContext } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import UserContext from "../contexts/UserContext.js";
+import UserContext from "./context/UserContext";
 import Navbar from "./shared/NavBar.jsx";
 
 export default function PaginaDoProduto(){
     const {ID} = useParams();
-    /* const { token } = useContext(UserContext); */
-    const { token } = {
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzI3NWNlY2U2MDVjNjlkOTZhNDFmMWUiLCJpYXQiOjE2NjM1MjQwODl9.boJwSJ_KxZFi3wod0sm_CoLNwdFXQA2-dFCjd0RDYh8"
-      }
+    const { userData } = useContext(UserContext);
+    
     const config = {
         headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${userData.token}`
         }
     }
+
+    console.log(userData)
     
     const navigate = useNavigate();
 
@@ -42,6 +42,11 @@ export default function PaginaDoProduto(){
         navigate('/')
     }
     function adicionarAoCarrinho(){
+        if(!userData.token){
+            navigate('/signIn')
+            return
+        }
+
         axios.post ('https://projeto14-urbansk8shop-back.herokuapp.com/cart', {
             productId: produto._id
         }, config).then(res =>{
