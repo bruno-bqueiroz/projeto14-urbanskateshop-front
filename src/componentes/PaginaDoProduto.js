@@ -3,10 +3,10 @@ import {useState, useEffect, useContext } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import UserContext from "../contexts/UserContext.js";
+import Navbar from "./shared/NavBar.jsx";
 
 export default function PaginaDoProduto(){
     const {ID} = useParams();
-    console.log(ID)
     /* const { token } = useContext(UserContext); */
     const { token } = {
         "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzI3NWNlY2U2MDVjNjlkOTZhNDFmMWUiLCJpYXQiOjE2NjM1MjQwODl9.boJwSJ_KxZFi3wod0sm_CoLNwdFXQA2-dFCjd0RDYh8"
@@ -16,7 +16,6 @@ export default function PaginaDoProduto(){
             Authorization: `Bearer ${token}`
         }
     }
-console.log(token)
     
     const navigate = useNavigate();
 
@@ -24,10 +23,8 @@ console.log(token)
 
     useEffect (()=>{
         axios.get('https://projeto14-urbansk8shop-back.herokuapp.com/products').then(res =>{
-            console.log('entrou dentro do then')
             setProdutos(res.data);
         }).catch(erro=>{
-            console.log('entrou dentro do catch')
             console.log(erro)
          })
     },[])
@@ -60,28 +57,16 @@ console.log(token)
     return (
         <>
         <Body>
-        <Header>
-            <div>
-                <p onClick={irParaLogin}> Entrar /</p> <p onClick={irParaCadastro}>Cadastrar</p>
-            </div>
-            <div>
-            <h1 onClick={irParaHome}>URBAN</h1>
-            </div>
-            <div onClick={irParaCarrinho}>
-                <ion-icon name="cart"></ion-icon>
-            </div>
-        </Header>
+            <Navbar color='black'/>
             <Corpo>
                 <img src={produto.url_image} alt ={produto.description} />
-                <div >
-                    <h1>{produto.description}</h1>
-                    <p>R$ {produto.newValue/100}</p>            
-                </div>
-                <div>
-                    <button onClick={irParaHome}> Pagina inicial </button>  
-                    <button > Comprar </button>
-                    <button onClick={adicionarAoCarrinho}> Adicionar ao carrinho </button> 
-                </div>
+                <Descricao >
+                    <h1>{produto.title}</h1>
+                    <p>{produto.description}</p>
+                    <div>
+                    <h2>R$ {produto.newValue/100}</h2> <button onClick={adicionarAoCarrinho}> ADD TO CART </button>            
+                    </div>
+                </Descricao>
             </Corpo>
         </Body>
         </>
@@ -92,8 +77,6 @@ console.log(token)
         <h1>Loading..</h1>
         </>
     )
-    
-    
 }
 
 const Body = styled.div`
@@ -106,7 +89,6 @@ const Body = styled.div`
     align-items: center;
     font-size: 8vw;
     font-weight: 700;
-    
 `
 
 const Header = styled.div`
@@ -144,7 +126,7 @@ const Header = styled.div`
 `
 
 const Corpo = styled.div`
-    margin-top: 12vh;
+    margin-top: 15vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -152,12 +134,50 @@ const Corpo = styled.div`
     width: 100%;
     height: auto;
     img{
-        max-width: 80vw;
+        border-radius: 2vw;
+        max-width: 65vw;
         height: auto;
-        max-height: 60vh;
+        max-height: 55vh;
     }
-    div h1{
+`
+
+const Descricao = styled.div`
+    width: 100vw;
+    padding-left: 5vw;
+    div{
+        width: 100%;
+        height: 10vw;
+        position: fixed;
+        bottom: 3vh;
+        background-color: #FFFFFF;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        h2{
+        font-size: 5vw;
+        margin: 2vh 0;
+        }
+        button{
+            margin-left: 2vw;
+            width: 22vw;
+            height: 4vh;
+            background-color: #333430;
+            color: #FFFFFF;
+            border-radius: 1vw;
+            font-size: 3vw;
+            font-weight: 900;
+        }
+    }
+    h1{
         font-size: 10vw;
+        margin: 3vh 0 ;
+        color: #333430;
+    }
+    p{
+        font-size: 4vw;
+        font-weight: 400;
+        margin: 2vh 0;
+        color: #727272;
     }
     
 `

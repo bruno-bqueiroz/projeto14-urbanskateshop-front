@@ -13,7 +13,6 @@ export default function Compra (){
 
     const navigate = useNavigate()
     const [compras, setCompras] = useState([]);
-    console.log(token)
     const config = {
         headers: {
             Authorization: `Bearer ${token}`
@@ -22,7 +21,7 @@ export default function Compra (){
     
     useEffect (()=>{
         
-        axios.get('http://localhost:5000/checkout', config
+        axios.get('https://projeto14-urbansk8shop-back.herokuapp.com/checkout', config
         ).then(res =>{
             console.log('entrou dentro do then')
             setCompras(res.data);
