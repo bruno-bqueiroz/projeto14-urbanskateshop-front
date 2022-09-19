@@ -2,30 +2,27 @@ import { useParams, useNavigate } from "react-router-dom";
 import {useState, useEffect, useContext } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import UserContext from "../contexts/UserContext.js";
+import UserContext from "./context/UserContext";
 import Navbar from "./shared/NavBar.jsx";
 
-export default function PaginaDoProduto(){
-    const {ID} = useParams();
-    /* const { token } = useContext(UserContext); */
-    const { token } = {
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzI3NWNlY2U2MDVjNjlkOTZhNDFmMWUiLCJpYXQiOjE2NjM1MjQwODl9.boJwSJ_KxZFi3wod0sm_CoLNwdFXQA2-dFCjd0RDYh8"
-      }
+export default function PaginaDoproduct(){
+    const navigate = useNavigate();
+    const {productId} = useParams();
+    const [product, setProduct] = useState([]);
+    const { userData, localToken } = useContext(UserContext);
+    const [token, setToken] = useState(userData.token || localToken)
+    
     const config = {
         headers: {
             Authorization: `Bearer ${token}`
         }
     }
-    
-    const navigate = useNavigate();
-
-    const [produtos, setProdutos] = useState([]);
 
     useEffect (()=>{
-        axios.get('https://projeto14-urbansk8shop-back.herokuapp.com/products').then(res =>{
-            setProdutos(res.data);
+        axios.get(`https://projeto14-urbansk8shop-back.herokuapp.com/products/${productId}`).then(res =>{
+            setProduct(res.data);
         }).catch(erro=>{
-            console.log(erro)
+            console.error(erro)
          })
     },[])
 
@@ -42,29 +39,32 @@ export default function PaginaDoProduto(){
         navigate('/')
     }
     function adicionarAoCarrinho(){
+        if(!token){
+            navigate('/signIn')
+            return
+        }
+
         axios.post ('https://projeto14-urbansk8shop-back.herokuapp.com/cart', {
-            productId: produto._id
+            productId: product._id
         }, config).then(res =>{
-            console.log(res)
             alert(
                 "Produto adicionado ao carrinho"
             )
         }).catch(error => console.error(error))
     }
-    const produto = produtos.find((value) => value._id === ID)
 
-    if (produto){
+    if (product){
     return (
         <>
         <Body>
             <Navbar color='black'/>
             <Corpo>
-                <img src={produto.url_image} alt ={produto.description} />
+                <img src={product.url_image} alt ={product.description} />
                 <Descricao >
-                    <h1>{produto.title}</h1>
-                    <p>{produto.description}</p>
+                    <h1>{product.title}</h1>
+                    <p>{product.description}</p>
                     <div>
-                    <h2>R$ {produto.newValue/100}</h2> <button onClick={adicionarAoCarrinho}> ADD TO CART </button>            
+                    <h2>R$ {(product.newValue/100).toFixed(2)}</h2> <button onClick={adicionarAoCarrinho}> ADD TO CART </button>            
                     </div>
                 </Descricao>
             </Corpo>

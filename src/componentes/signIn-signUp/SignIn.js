@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import {postSignIn}  from '../../database/dataService';
 import userContext from '../context/UserContext';
-import image1 from '../../images/mikael-kristenson-2YWymeP3cJM-unsplash.jpg'
+import image1 from '../../images/mikael-kristenson-2YWymeP3cJM-unsplash.png'
 
 
 
@@ -30,9 +30,12 @@ export default function SignIn(){
             setUserData(response.data)
             setAuthorization(true)
             localStorage.setItem('token', response.data.token)
+            localStorage.setItem('userName', response.data.name)
             navigate(`/`)
         } catch (error) {
             console.error(error)
+            localStorage.removeItem('token')
+            localStorage.removeItem('userName')
             if(error.response?.status === 401) {setErr(true); setUnAuthorized(true);}
             if(error.response?.status === 400) setErr(true)
             if(error.response?.status === 404) setErr(true);alert(error.response?.data.message);
