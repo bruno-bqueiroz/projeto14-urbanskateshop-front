@@ -13,22 +13,24 @@ import Compra from './Compra';
 import "../style/style.css"
 
 export default function App() {
-  const [token, setToken] = useState({});
   const [userData, setUserData] = useState({})
   const [authorization, setAuthorization] = useState(false)
+  const localToken = localStorage.getItem('token')
+  const localUserName = localStorage.getItem('userName')
+  console.log(localToken)
   
   return (
     <>
     <GlobalStyle/>
     <UserContext.Provider value={{
-      token, setToken,
       userData, setUserData,
-      authorization, setAuthorization
+      authorization, setAuthorization,
+      localToken, localUserName
       }}>
       <BrowserRouter>
         <Routes>
           <Route path='/' element = {<Home />}/>
-          <Route path='/:ID' element = {<PaginaDoProduto />} />
+          <Route path='/:productId' element = {<PaginaDoProduto />} />
           <Route path='/signIn' element = {<Login />}/>
           <Route path='/signUp' element = {<Cadastro />}/>
           <Route path='/cart' element = {<Carrinho />}/>

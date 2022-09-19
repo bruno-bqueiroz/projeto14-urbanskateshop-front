@@ -4,15 +4,17 @@ import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import UserContext from "../context/UserContext.js";
 
+import Navbar from "../shared/NavBar.jsx";
+
 export default function Carrinho (){
     const navigate = useNavigate()
     const [carrinho, setCarrinho] = useState([]);
-    
-    const { userData } = useContext(UserContext);
+    const { userData, localToken } = useContext(UserContext);
+    const [token, setToken] = useState(userData.token || localToken)
     
     const config = {
         headers: {
-            Authorization: `Bearer ${userData.token}`
+            Authorization: `Bearer ${token}`
         }
     }
     
@@ -20,32 +22,21 @@ export default function Carrinho (){
         
         axios.get('https://projeto14-urbansk8shop-back.herokuapp.com/cart', config
         ).then(res =>{
-            console.log('entrou dentro do then')
             setCarrinho(res.data.products);
         }).catch(erro=>{
-            console.log('entrou dentro do catch')
-            console.log(erro)
+            console.error(erro)
+            if(erro.response?.status !== 404) navigate('/signIn')
          })
     },[])
     let total = 0;
     carrinho.map (value => total +=value.newValue)
     total = total/100
-    console.log(carrinho)
 
-    function irParaLogin(){
-        navigate('/signIn')
-    }
-    function irParaCadastro(){
-        navigate('/signUp')
-    }
-    function irParaHome(){
-        navigate('/')
-    }
+
     function finalizarCompra(){
         axios.post ('https://projeto14-urbansk8shop-back.herokuapp.com/checkout', {
             payment: 3000000
         }, config).then(res =>{
-            console.log(res)
             navigate('/checkout')
         }).catch(error => console.error(error))
         
@@ -54,17 +45,7 @@ export default function Carrinho (){
     return (
         <>
         <Body>
-        <Header>
-            <div>
-                <p onClick={irParaLogin}> Entrar /</p> <p onClick={irParaCadastro}>Cadastrar</p>
-            </div>
-            <div>
-            <h1 onClick={irParaHome}>URBAN</h1>
-            </div>
-            <div>
-                <ion-icon name="cart"></ion-icon>
-            </div>
-        </Header>
+        <Navbar color='black'/>
         <Corpo>
         {!carrinho ? <h1> Carregando Produtos do carrinho </h1> : 
         carrinho.map((value, index) => 
