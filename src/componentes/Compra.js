@@ -36,6 +36,7 @@ export default function Compra (){
         {!compras ? <h1> Carregando Produtos do carrinho </h1> : 
         compras.map((value, index) => 
         <Caixa key={index}>
+            <p className="data">Data da compra : {value.paymentTime}</p>
             {value.products.map((produtos, index)=>
             <Container key={index}>
                 <img src={produtos.url_image} alt ={produtos.description} />
@@ -48,7 +49,7 @@ export default function Compra (){
             )}
             <span><div>
             <p>Produto Enviado!</p>  
-            <b>Total da Compra R$ {value.amount/100}</b>
+            <b>Total da Compra R$ {value.amount/100}</b> 
             </div></span>
         </Caixa>
         )} 
@@ -136,6 +137,12 @@ span div{
         font-weight: 800;
         color: #212529;
     }
+
+    
 }
+p.data {
+        font-size: 10px;
+        margin: 5px 0 0 10px;
+    }
 
 `
