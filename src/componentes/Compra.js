@@ -2,22 +2,22 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import UserContext from "../contexts/UserContext.js";
+import UserContext from "./context/UserContext";
+import Navbar from "./shared/NavBar";
 
 export default function Compra (){
 
-    /* const { token } = useContext(UserContext); */
-    const { token } = {
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzI3NWNlY2U2MDVjNjlkOTZhNDFmMWUiLCJpYXQiOjE2NjM1MjQwODl9.boJwSJ_KxZFi3wod0sm_CoLNwdFXQA2-dFCjd0RDYh8"
-      }
+    const { userData } = useContext(UserContext);
+    console.log(userData)
+    const config = {
+        headers: {
+            Authorization: `Bearer ${userData.token}`
+        }
+    }
 
     const navigate = useNavigate()
     const [compras, setCompras] = useState([]);
-    const config = {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    }
+    
     
     useEffect (()=>{
         
@@ -33,34 +33,14 @@ export default function Compra (){
 
     console.log(compras)
 
-    function irParaLogin(){
-        navigate('/signIn')
-    }
-    function irParaCadastro(){
-        navigate('/signUp')
-    }
-    function irParaCarrinho(){
-        navigate('/cart')
-    }
-
     return (
         <>
         <Body>
-        <Header>
-            <div>
-                <p onClick={irParaLogin}> Entrar /</p> <p onClick={irParaCadastro}>Cadastrar</p>
-            </div>
-            <div>
-            <h1>URBAN</h1>
-            </div>
-            <div onClick={irParaCarrinho}>
-                <ion-icon name="cart"></ion-icon>
-            </div>
-        </Header>
+        <Navbar color='black'/>
         <Corpo>
         {!compras ? <h1> Carregando Produtos do carrinho </h1> : 
-        compras.map((value) => 
-        <Caixa>
+        compras.map((value, index) => 
+        <Caixa key={index}>
             {value.products.map((produtos, index)=>
             <Container key={index}>
                 <img src={produtos.url_image} alt ={produtos.description} />

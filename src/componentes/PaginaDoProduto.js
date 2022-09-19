@@ -1,23 +1,20 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {useState, useEffect, useContext } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import UserContext from "../contexts/UserContext.js";
 import Navbar from "./shared/NavBar.jsx";
+import UserContext from "./context/UserContext.js";
 
 export default function PaginaDoProduto(){
     const {ID} = useParams();
-    /* const { token } = useContext(UserContext); */
-    const { token } = {
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzI3NWNlY2U2MDVjNjlkOTZhNDFmMWUiLCJpYXQiOjE2NjM1MjQwODl9.boJwSJ_KxZFi3wod0sm_CoLNwdFXQA2-dFCjd0RDYh8"
-      }
+   const { userData } = useContext(UserContext);
+    console.log(userData)
     const config = {
         headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${userData.token}`
         }
     }
     
-    const navigate = useNavigate();
 
     const [produtos, setProdutos] = useState([]);
 
@@ -29,18 +26,6 @@ export default function PaginaDoProduto(){
          })
     },[])
 
-    function irParaLogin(){
-        navigate('/signIn')
-    }
-    function irParaCadastro(){
-        navigate('/signUp')
-    }
-    function irParaCarrinho(){
-        navigate('/cart')
-    }
-    function irParaHome(){
-        navigate('/')
-    }
     function adicionarAoCarrinho(){
         axios.post ('https://projeto14-urbansk8shop-back.herokuapp.com/cart', {
             productId: produto._id
@@ -74,6 +59,7 @@ export default function PaginaDoProduto(){
     }
     return(
         <>
+        <Navbar color='black'/>
         <h1>Loading..</h1>
         </>
     )
@@ -89,40 +75,6 @@ const Body = styled.div`
     align-items: center;
     font-size: 8vw;
     font-weight: 700;
-`
-
-const Header = styled.div`
-    width: 100%;
-    height: 12vh;
-    display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    align-items: center;
-
-    position: fixed;
-    top: 0;
-    z-index: 1;
-
-    border-bottom: 1px  solid;
-    box-shadow: 0px 1px 15px black;
-    background-color: white;
-
-    h1{
-    font-family: "urbanJungle";
-    font-size: 10vw;
-    text-align: center;
-    margin: 0;
-    }
-    p{
-    font-family: "aDrip";
-    font-size:5vw;
-    text-align: center;
-    margin: 0;
-    }
-    ion-icon{
-    width: 10vw;
-    height: 10vw;
-    margin-left: 20%;
-    }
 `
 
 const Corpo = styled.div`

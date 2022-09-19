@@ -1,16 +1,13 @@
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
-import { useState, useEffect,useContext } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 import RenderProducts from "./RenderProducts";
 import jan_korpriva from '../../images/jan-kopriva-oK2OoXCpOB4-unsplash.jpg'
 import PH_flip from '../../images/ph_flip.png'
-import UserContext from "../context/UserContext";
 import Navbar from "../shared/NavBar";
 
 export default function Home (){
-    const navigate = useNavigate();
     const [produtos, setProdutos] = useState([]);
 
 
@@ -22,13 +19,7 @@ export default function Home (){
          })
     },[])
 
-    function irParaLogin(){
-        navigate('/signIn')
-    }
-
-    function irParaCarrinho(){
-        navigate('/cart')
-    }
+    
 
     return (
         <>
