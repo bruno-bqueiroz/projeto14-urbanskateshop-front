@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import UserContext from "./context/UserContext";
-import Navbar from "./shared/NavBar";
 import { useNavigate } from "react-router-dom";
+
+import UserContext from "../shared/context/UserContext";
+import Navbar from "../shared/NavBar";
 
 export default function Compra (){
     const navigate = useNavigate()
@@ -13,47 +14,46 @@ export default function Compra (){
     
     const config = {
         headers: {
-            Authorization: `Bearer ${userData.token}`
+            Authorization: `Bearer ${token}`
         }
     }
     
     useEffect (()=>{
-        
         axios.get('https://projeto14-urbansk8shop-back.herokuapp.com/checkout', config
         ).then(res =>{
             setCompras(res.data);
-        }).catch(erro=>{
-            console.error(erro)
-            navigate('/signIn')
+        }).catch(error=>{
+            console.error(error)
+            if(error.response.status !== 404 )navigate('/signIn')
          })
     },[])
 
     return (
         <>
         <Body>
-        <Navbar color='black'/>
-        <Corpo>
-        {!compras ? <h1> Carregando Produtos do carrinho </h1> : 
-        compras.map((value, index) => 
-        <Caixa key={index}>
-            <p className="data">Data da compra : {value.paymentTime}</p>
-            {value.products.map((produtos, index)=>
-            <Container key={index}>
-                <img src={produtos.url_image} alt ={produtos.description} />
-                
-                <div >
-                    <h1>{produtos.description}</h1>
-                    <p>R$ {produtos.newValue/100}</p>   
-                </div>    
-            </Container>
-            )}
-            <span><div>
-            <p>Produto Enviado!</p>  
-            <b>Total da Compra R$ {value.amount/100}</b> 
-            </div></span>
-        </Caixa>
-        )} 
-        </Corpo>
+            <Navbar color='black'/>
+            <Corpo>
+                {!compras ? <h1> Carregando Produtos do carrinho </h1> : 
+                compras.map((value, index) => 
+                <Caixa key={index}>
+                    <p className="data">Data da compra : {value.paymentTime}</p>
+                    {value.products.map((produtos, index)=>
+                    <Container key={index}>
+                        <img src={produtos.url_image} alt ={produtos.description} />
+                        
+                        <div >
+                            <h1>{produtos.description}</h1>
+                            <p>R$ {produtos.newValue/100}</p>   
+                        </div>    
+                    </Container>
+                    )}
+                    <span><div>
+                    <p>Produto Enviado!</p>  
+                    <b>Total da Compra R$ {value.amount/100}</b> 
+                    </div></span>
+                </Caixa>
+                )} 
+            </Corpo>
         </Body>
         </>
     )
