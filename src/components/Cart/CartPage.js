@@ -118,6 +118,30 @@ const Rodape = styled.div`
             font-weight: 900;
         }
 
+        @media (min-width: 800px) {
+            
+            height: 15vh;
+            div{
+                margin-top: 1vw;
+            }
+            div div{
+            p{
+                font-size: 2vw;
+            }
+            h2{
+                font-size: 2vw;
+            }
+            h3{
+                font-size: 2vw;
+            }
+        }
+            button{
+                width: 15vw;
+                height: 7vh;
+                font-size: 2vw;
+            }
+        }
+
 `
 
 const Body = styled.div`
@@ -147,6 +171,7 @@ const Container = styled.div`
     img{
         width: auto;
         height: 16vh;
+        margin-right: 3vw;
     }
     div {
         height: 20vh;
