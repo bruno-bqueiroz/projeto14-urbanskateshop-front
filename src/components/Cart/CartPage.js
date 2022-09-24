@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import UserContext from "../context/UserContext.js";
+import UserContext from "../shared/context/UserContext.js";
 
 import Navbar from "../shared/NavBar.jsx";
 
@@ -14,7 +14,7 @@ export default function Carrinho (){
     
     const config = {
         headers: {
-            Authorization: `Bearer ${userData.token}`
+            Authorization: `Bearer ${token}`
         }
     }
     
@@ -23,9 +23,9 @@ export default function Carrinho (){
         axios.get('https://projeto14-urbansk8shop-back.herokuapp.com/cart', config
         ).then(res =>{
             setCarrinho(res.data.products);
-        }).catch(erro=>{
-            console.error(erro)
-            if(erro.response?.status !== 404) navigate('/signIn')
+        }).catch(error=>{
+            console.error(error)
+            if(error.response?.status !== 404) navigate('/signIn')
          })
     },[])
     let total = 0;

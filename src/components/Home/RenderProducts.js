@@ -2,11 +2,11 @@ import { Link } from "react-router-dom"
 import styled from "styled-components" 
 
 export default function RenderizarHome({
-    produtos
+    product
 }){
     return (
         <>
-            {produtos.map((value, index) => 
+            {product.map((value, index) => 
                 <Caixa1 key={index}>
                     <Link to={`/${value._id}`}>
                     <img src={value.url_image} alt = {value.title} />

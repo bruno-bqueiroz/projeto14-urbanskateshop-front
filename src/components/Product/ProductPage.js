@@ -1,9 +1,11 @@
 import { useParams, useNavigate } from "react-router-dom";
 import {useState, useEffect, useContext } from "react";
-import axios from "axios";
+import {TailSpin, ThreeCircles} from 'react-loader-spinner'
 import styled from "styled-components";
-import UserContext from "./context/UserContext.js";
-import Navbar from "./shared/NavBar.jsx";
+
+import { getSingleProduct, getCart } from "../../database/dataService.js";
+import UserContext from "../shared/context/UserContext.js";
+import Navbar from "../shared/NavBar.jsx";
 
 
 export default function PaginaDoproduct(){
@@ -13,14 +15,10 @@ export default function PaginaDoproduct(){
     const { userData, localToken } = useContext(UserContext);
     const [token] = useState(userData.token || localToken)
     
-    const config = {
-        headers: {
-            Authorization: `Bearer ${userData.token}`
-        }
-    }
+    
 
     useEffect (()=>{
-        axios.get(`https://projeto14-urbansk8shop-back.herokuapp.com/products/${productId}`).then(res =>{
+        getSingleProduct(productId).then(res =>{
             setProduct(res.data);
         }).catch(erro=>{
             console.error(erro)
@@ -33,9 +31,7 @@ export default function PaginaDoproduct(){
             return
         }
 
-        axios.post ('https://projeto14-urbansk8shop-back.herokuapp.com/cart', {
-            productId: product._id
-        }, config).then(res =>{
+        getCart(productId, token).then(res =>{
             alert(
                 "Produto adicionado ao carrinho"
             )
@@ -50,7 +46,19 @@ export default function PaginaDoproduct(){
         <>
         <Body>
             <Navbar color='black'/>
-            <Corpo>
+            {!product ? 
+                <div className="spinner">
+                    <ThreeCircles
+                        height='100'
+                        width={100}
+                        color= '#6EA8DD'
+                        radius={2}
+                        wrapperClass ='spinner'
+                        wrapperStyle={{height: "80vh"}}
+                    />
+                </div>
+                :
+                <Corpo>
                 <img src={product.url_image} alt ={product.description} />
                 <Descricao >
                     <h1>{product.title}</h1>
@@ -60,6 +68,7 @@ export default function PaginaDoproduct(){
                     </div>
                 </Descricao>
             </Corpo>
+                }
         </Body>
         </>
     )

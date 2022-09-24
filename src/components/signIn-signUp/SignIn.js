@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import {postSignIn}  from '../../database/dataService';
-import userContext from '../context/UserContext';
+import userContext from '../shared/context/UserContext';
 import image1 from '../../images/mikael-kristenson-2YWymeP3cJM-unsplash.png'
 
 
