@@ -14,7 +14,6 @@ export default function SignIn(){
     const [password, setPassword] = useState('')
     const [err, setErr] = useState(false)
     const [unauthorized ,setUnAuthorized] = useState(false)
-    const {setAuthorization} = useContext(userContext)
     const {setUserData} = useContext(userContext)
 
     async function handleForm (e){
@@ -27,7 +26,6 @@ export default function SignIn(){
                 password,
             })
             setUserData(response.data)
-            setAuthorization(true)
             localStorage.setItem('token', response.data.token)
             localStorage.setItem('userName', response.data.name)
             navigate(`/`)
