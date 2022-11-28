@@ -1,0 +1,58 @@
+.body{
+    width: 100vw;  
+    height: 100vw;
+    padding-top: 100px;
+    font-style: "Raleway";
+    background-color: #E9ECEF;
+}
+
+.container{
+    width: 80%;
+    margin: 0px auto 100px auto;
+}
+
+.box{
+    position: relative;
+    border: black dashed 2px;
+    border-radius: 30px;
+    margin-bottom: 20px;
+    padding: 60px 20px 10px 20px;
+    background-color: #ffff;
+}
+
+.box .date{
+    position: absolute;
+    top: 20px;
+    left: 40px;
+}
+
+.box p{
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.product{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 2fr 7.5fr 1.5fr;
+    margin: 20px 0 20px 0;
+}
+
+.product h1{
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.product p{
+    font-size: 20px;
+}
+
+
+.product img{
+    width: 200px;
+}
+
+
+
+
