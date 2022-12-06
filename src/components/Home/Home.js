@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { TailSpin } from "react-loader-spinner";
 
 import { getAllProducts } from "../../database/dataService";
@@ -6,9 +6,11 @@ import { Body, Container } from "./StyledHome";
 import RenderProducts from "./RenderProducts";
 import Navbar from "../shared/NavBar";
 import CarouselHome from "./Carousel";
+import UserContext from "../shared/context/UserContext";
 
 export default function Home() {
   const [product, setProducts] = useState([]);
+  const {carouselInterval} = useContext(UserContext)
 
   useEffect(() => {
     getAllProducts()

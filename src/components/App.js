@@ -1,7 +1,7 @@
 import GlobalStyle from "../style/globalStyles";
 import UserContext from './shared/context/UserContext'; 
 import { useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import Home from "./Home/Home";
 import SignIn from "./signIn-signUp/SignIn";
@@ -14,6 +14,7 @@ import "../style/style.css"
 
 export default function App() {
   const [userData, setUserData] = useState({})
+  const [carouselInterval, setCarouselInterval] = useState(function(){})
   const localToken = localStorage.getItem('token')
   const localUserName = localStorage.getItem('userName')
   
@@ -22,7 +23,8 @@ export default function App() {
     <GlobalStyle/>
     <UserContext.Provider value={{
       userData, setUserData,
-      localToken, localUserName
+      localToken, localUserName,
+      carouselInterval, setCarouselInterval
       }}>
         <Routes>
           <Route path='/' element = {<Home />}/>

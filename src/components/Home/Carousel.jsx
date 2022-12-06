@@ -1,17 +1,19 @@
 import styled from "styled-components";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useContext } from "react";
 
 import { getAllProducts, getSearchProduct } from "../../database/dataService";
 
 import Raphazito from "../../images/Raphazito.jpg";
 import jan_korpriva from "../../images/jan-kopriva-oK2OoXCpOB4-unsplash.jpg";
 import PH_flip from "../../images/ph_flip.png";
+import UserContext from "../shared/context/UserContext";
 
 export default function CarouselHome({setProducts}) {
     const carousel = useRef(null);
+    const {setCarouselInterval} = useContext(UserContext)
     let count = 1;
 
-    useEffect(() => {
+    const startInterval = ()=>{
         setInterval(() => {
             if (count < 3) {
                 count++;
@@ -21,7 +23,12 @@ export default function CarouselHome({setProducts}) {
                 handleClick(count);
             }
         }, 7000);
-    }, []);
+    }
+
+    useEffect(() => {
+        clearInterval(startInterval);
+        startInterval();
+    });
 
     function handleClick(n) {
         if (n > 2) {
@@ -72,11 +79,11 @@ export default function CarouselHome({setProducts}) {
             </div>
             <div className="slide" onClick={() => getProduct("tenis")}>
                 <img src={jan_korpriva} className="slide" alt="" />
-                <h1>Tenis para todos os estilos e manobras.</h1>
+                <button>Tenis para todos os estilos e manobras.</button>
             </div>
             <div className="slide" onClick={() => getProduct("shape")}>
                 <img src={Raphazito} className="slide" alt="" />
-                <h1>Escolha o seu shape para botar pressão nos games.</h1>
+                <button>Escolha o seu shape para botar pressão nos games.</button>
             </div>
         </Carousel>
     );
@@ -117,6 +124,10 @@ const Carousel = styled.div`
     position: absolute;
     bottom: 80px;
     font-size: 30px;
+  }
+
+  button{
+    color: black;
   }
 
   @media (max-width:800px) {
